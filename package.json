@@ -1,0 +1,40 @@
+{
+    "name": "slush-slush-cmake",
+    "description": "A generator for a cmake superproject",
+    "version": "0.1.0",
+    "homepage": "https://github.com/julian-becker/slush-slush-cmake",
+    "author": {
+        "name": "Julian Becker",
+        "email": "becker.julian@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/julian-becker/slush-slush-cmake.git"
+    },
+    "bugs": {
+        "url": "https://github.com/julian-becker/slush-slush-cmake/issues"
+    },
+    "license": "MIT",
+    "main": "slushfile.js",
+    "engines": {
+        "node": ">= 0.10.26",
+        "npm": ">=1.4.3"
+    },
+    "scripts": {
+        "test": "echo \"No tests\""
+    },
+    "dependencies": {
+        "slush": ">=1.0.0",
+        "gulp": "^3.6.2",
+        "gulp-template": "^0.1.1",
+        "gulp-install": "^0.1.4",
+        "gulp-conflict": "^0.1.1",
+        "gulp-rename": "^1.2.0",
+        "underscore.string": "^2.3.3",
+        "inquirer": "^3.3.0",
+        "iniparser": "^1.0.5"
+    },
+    "keywords": [
+        "slushgenerator"
+    ]
+}
