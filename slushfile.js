@@ -11,6 +11,7 @@
 var gulp = require('gulp'),
     install = require('gulp-install'),
     conflict = require('gulp-conflict'),
+    replace = require('gulp-replace'),
     template = require('gulp-template'),
     rename = require('gulp-rename'),
     _ = require('underscore.string'),
@@ -44,7 +45,8 @@ var defaults = (function () {
 
     return {
         appName: workingDirName,
-        userName: osUserName || format(user.name || ''),
+        libraryName1: 'mylibA',
+        libraryName2: 'mylibB',
         authorName: user.name || '',
         authorEmail: user.email || ''
     };
@@ -52,8 +54,16 @@ var defaults = (function () {
 
 gulp.task('default', function (done) {
     var prompts = [{
+        name: 'libraryName1',
+        message: 'Name of dummy library 1',
+        default: defaults.libraryName1
+    }, {
+        name: 'libraryName2',
+        message: 'Name of dummy library 2',
+        default: defaults.libraryName2
+    }, {
         name: 'appName',
-        message: 'What is the name of your project?',
+        message: 'Name for a hello-world application using ?',
         default: defaults.appName
     }, {
         name: 'appDescription',
@@ -71,10 +81,6 @@ gulp.task('default', function (done) {
         message: 'What is the author email?',
         default: defaults.authorEmail
     }, {
-        name: 'userName',
-        message: 'What is the github username?',
-        default: defaults.userName
-    }, {
         type: 'confirm',
         name: 'moveon',
         message: 'Continue?'
@@ -88,11 +94,23 @@ gulp.task('default', function (done) {
             }
             answers.appNameSlug = _.slugify(answers.appName);
             gulp.src(__dirname + '/templates/**')
+                .pipe(replace('${','_UGLY_OPENBRACE_'))
+                .pipe(replace('}','_UGLY_CLOSINGBRACE_'))
                 .pipe(template(answers))
-                .pipe(rename(function (file) {
-                    if (file.basename[0] === '_') {
-                        file.basename = '.' + file.basename.slice(1);
+                .pipe(replace('_UGLY_OPENBRACE_','${'))
+                .pipe(replace('_UGLY_CLOSINGBRACE_','}'))
+                .pipe(rename(function (path) {
+                    if (path.basename[0] === '_') {
+                        path.basename = '.' + path.basename.slice(1);
                     }
+                    path.dirname  = path.dirname
+                      .replace(/==(\s*appName\s*)==/g, answers.appName)
+                      .replace(/==(\s*libraryName1\s*)==/g, answers.libraryName1)
+                      .replace(/==(\s*libraryName2\s*)==/g, answers.libraryName2);
+                    path.basename = path.basename
+                      .replace(/==(\s*appName\s*)==/g, answers.appName)
+                      .replace(/==(\s*libraryName1\s*)==/g, answers.libraryName1)
+                      .replace(/==(\s*libraryName2\s*)==/g, answers.libraryName2);
                 }))
                 .pipe(conflict('./'))
                 .pipe(gulp.dest('./'))

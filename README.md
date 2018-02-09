@@ -5,10 +5,10 @@
 
 ## Getting Started
 
-Install `slush-slush-cmake` globally:
+Install `slush-cmake` globally:
 
 ```bash
-$ npm install -g slush-slush-cmake
+$ npm install -g slush-cmake
 ```
 
 ### Usage
@@ -16,13 +16,13 @@ $ npm install -g slush-slush-cmake
 Create a new folder for your project:
 
 ```bash
-$ mkdir my-slush-slush-cmake
+$ mkdir my-slush-cmake
 ```
 
 Run the generator from within the new folder:
 
 ```bash
-$ cd my-slush-slush-cmake && slush slush-cmake
+$ cd my-slush-cmake && slush cmake
 ```
 
 ## Getting To Know Slush
@@ -35,12 +35,12 @@ To find out more about Slush, check out the [documentation](https://github.com/s
 
 ## Contributing
 
-See the [CONTRIBUTING Guidelines](https://github.com/julian-becker/slush-slush-cmake/blob/master/CONTRIBUTING.md)
+See the [CONTRIBUTING Guidelines](https://github.com/julian-becker/slush-cmake/blob/master/CONTRIBUTING.md)
 
 ## Support
-If you have any problem or suggestion please open an issue [here](https://github.com/julian-becker/slush-slush-cmake/issues).
+If you have any problem or suggestion please open an issue [here](https://github.com/julian-becker/slush-cmake/issues).
 
-## License 
+## License
 
 The MIT License
 
@@ -66,4 +66,3 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
-
