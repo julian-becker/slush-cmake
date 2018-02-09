@@ -3,6 +3,7 @@ project(<%= libraryName1 %>)
 
 add_library(${PROJECT_NAME} library_main.cpp)
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_14)
 
 target_include_directories(${PROJECT_NAME}
   PUBLIC

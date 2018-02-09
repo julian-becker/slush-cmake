@@ -5,6 +5,7 @@ find_package(GTest REQUIRED)
 find_package(<%= libraryName2 %> REQUIRED)
 
 add_executable(${PROJECT_NAME} test1.cpp)
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_14)
 
 target_link_libraries(${PROJECT_NAME}
   PRIVATE
