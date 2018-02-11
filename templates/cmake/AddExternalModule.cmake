@@ -5,12 +5,9 @@ include(AddModule)
 include(GitClone)
 
 macro(add_external_module)
-  cmake_parse_arguments(_ADD_EXT_MODULE "QUIET" "URL;BRANCH;CHECKOUT_DIR;DIRECTORY;TARGET;NAME" "" ${ARGN})
+  cmake_parse_arguments(_ADD_EXT_MODULE "QUIET" "URL;BRANCH;CHECKOUT_DIR;DIRECTORY;NAME" "TARGETS" ${ARGN})
   if(NOT _ADD_EXT_MODULE_DIRECTORY)
     set(_ADD_EXT_MODULE_DIRECTORY "${_ADD_EXT_MODULE_CHECKOUT_DIR}")
-  endif()
-  if(NOT _ADD_EXT_MODULE_TARGET)
-    set(_ADD_EXT_MODULE_TARGET "${_ADD_EXT_MODULE_NAME}")
   endif()
 
   if(_ADD_EXT_MODULE_QUIET)
@@ -32,6 +29,7 @@ macro(add_external_module)
   add_module(
     NAME "${_ADD_EXT_MODULE_NAME}"
     DIRECTORY "${_ADD_EXT_MODULE_DIRECTORY}"
+    TARGETS ${_ADD_EXT_MODULE_TARGETS}
     ${_ADD_EXT_MODULE_UNPARSED_ARGUMENTS}
   )
 
