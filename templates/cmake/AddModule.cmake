@@ -4,8 +4,13 @@ list(INSERT CMAKE_PREFIX_PATH 0 "${PROJECT_BINARY_DIR}/modules")
 
 include(CMakeParseArguments)
 
+
+## add_module(NAME       <name of module>
+##           [DIRECTORY  <directory of module>]              # defaults to the given NAME
+##           [TARGET     <name of the target of the module>] # defaults to the given NAME
+## )
 macro(add_module)
-  cmake_parse_arguments(ADD_MODULE "" "DIRECTORY;TARGET;NAME" "" ${ARGN})
+  cmake_parse_arguments(ADD_MODULE "" "NAME;DIRECTORY;TARGET" "" ${ARGN})
   if(NOT ADD_MODULE_DIRECTORY)
     set(ADD_MODULE_DIRECTORY "${ADD_MODULE_NAME}")
   endif()
@@ -13,7 +18,7 @@ macro(add_module)
     set(ADD_MODULE_TARGET "${ADD_MODULE_NAME}")
   endif()
 
-  add_subdirectory(${ADD_MODULE_DIRECTORY})
+  add_subdirectory(${ADD_MODULE_DIRECTORY} ${ADD_MODULE_UNPARSED_ARGUMENTS})
   export(TARGETS ${ADD_MODULE_TARGET} FILE "${PROJECT_BINARY_DIR}/targets/${ADD_MODULE_TARGET}Targets.cmake" )
 
   file(WRITE "${PROJECT_BINARY_DIR}/cmake/${ADD_MODULE_TARGET}Config.cmake.in" "

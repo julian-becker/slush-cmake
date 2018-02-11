@@ -7,12 +7,25 @@ target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_14)
 
 target_include_directories(${PROJECT_NAME}
   PUBLIC
-    include
-    ${CMAKE_BINARY_DIR}/include
-)
+    $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
+    $<INSTALL_INTERFACE:include>)
 
 include(GenerateExportHeader)
 generate_export_header(${PROJECT_NAME}
   EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/${PROJECT_NAME}/export.h
   EXPORT_MACRO_NAME <%= libraryName1 %>_API
 )
+
+include(GNUInstallDirs)
+
+install(
+    TARGETS  ${PROJECT_NAME}
+    EXPORT   ${PROJECT_NAME}Config
+    ARCHIVE  DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY  DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+install(DIRECTORY include/${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(DIRECTORY ${CMAKE_BINARY_DIR}/include/${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(EXPORT <%= libraryName1 %>Config DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake)

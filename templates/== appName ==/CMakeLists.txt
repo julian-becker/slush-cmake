@@ -13,3 +13,5 @@ target_link_libraries(${PROJECT_NAME}
     <%= libraryName1 %>::<%= libraryName1 %>
     <%= libraryName2 %>::<%= libraryName2 %>
 )
+
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
