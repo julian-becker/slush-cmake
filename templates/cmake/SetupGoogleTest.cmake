@@ -3,7 +3,7 @@ include(AddExternalModule)
 
 macro(setup_googletest)
 	set(CMAKE_MACOSX_RPATH 1)
-	set(gtest_force_shared_crt ON)
+	set(gtest_force_shared_crt ON CACHE INTERNAL "")
 	add_external_module(
 	  NAME         GTest
 	  TARGETS      gtest_main gtest
@@ -23,8 +23,8 @@ macro(setup_googletest)
 	set(GTEST_LANG_CXX11 1)
 
 	## Silence warnings treated as errors on MSVC 2017
-	target_compile_definitions(gtest      PRIVATE _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
-	target_compile_definitions(gtest_main PRIVATE _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
-	target_compile_definitions(gmock      PRIVATE _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
-	target_compile_definitions(gmock_main PRIVATE _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
+	target_compile_definitions(gtest      PUBLIC _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
+	target_compile_definitions(gtest_main PUBLIC _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
+	target_compile_definitions(gmock      PUBLIC _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
+	target_compile_definitions(gmock_main PUBLIC _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
 endmacro(setup_googletest)
