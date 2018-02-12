@@ -12,6 +12,7 @@ add_module(NAME <%= appName %>)
 
 
 set(CMAKE_MACOSX_RPATH 1)
+set(gtest_force_shared_crt ON)
 add_external_module(
   NAME         GTest
   TARGETS      gtest_main gtest
@@ -25,6 +26,14 @@ add_external_module(
 ## The target GTest::Main is expected to be provided via find_package(GTest)
 ## Since the library itself doesn't define it, we have to do it ourselves
 add_library(GTest::Main ALIAS gtest_main)
+set(GTEST_LANG_CXX11 1)
+
+## Silence warnings treated as errors on MSVC 2017
+target_compile_definitions(gtest PRIVATE _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
+target_compile_definitions(gtest_main PRIVATE _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
+target_compile_definitions(gmock PRIVATE _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
+target_compile_definitions(gmock_main PRIVATE _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
+
 
 enable_testing()
 add_module(NAME <%= libraryName1 %>_test)
