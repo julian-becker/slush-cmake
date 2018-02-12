@@ -5,36 +5,14 @@ list(INSERT CMAKE_PREFIX_PATH 0 ${CMAKE_CURRENT_LIST_DIR}/cmake)
 
 include(AddModule)
 include(AddExternalModule)
+include(SetupGoogleTest)
 
 add_module(NAME <%= libraryName1 %>)
 add_module(NAME <%= libraryName2 %>)
 add_module(NAME <%= appName %>)
 
-
-set(CMAKE_MACOSX_RPATH 1)
-set(gtest_force_shared_crt ON)
-add_external_module(
-  NAME         GTest
-  TARGETS      gtest_main gtest
-  URL          https://github.com/google/googletest.git
-  BRANCH       release-1.8.0
-  CHECKOUT_DIR external/googletest
-  DIRECTORY    external/googletest
-  QUIET
-)
-
-## The target GTest::Main is expected to be provided via find_package(GTest)
-## Since the library itself doesn't define it, we have to do it ourselves
-add_library(GTest::Main ALIAS gtest_main)
-set(GTEST_LANG_CXX11 1)
-
-## Silence warnings treated as errors on MSVC 2017
-target_compile_definitions(gtest PRIVATE _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
-target_compile_definitions(gtest_main PRIVATE _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
-target_compile_definitions(gmock PRIVATE _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
-target_compile_definitions(gmock_main PRIVATE _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
-
-
+setup_googletest()
 enable_testing()
+
 add_module(NAME <%= libraryName1 %>_test)
 add_module(NAME <%= libraryName2 %>_test)
