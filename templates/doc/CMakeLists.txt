@@ -29,3 +29,10 @@ add_custom_target(docs ALL
         "${CMAKE_CURRENT_SOURCE_DIR}"
         "${SPHINX_HTML_DIR}"
     COMMENT "Building HTML documentation with Sphinx")
+
+
+include(GNUInstallDirs)
+
+install(
+    DIRECTORY   "${CMAKE_CURRENT_BINARY_DIR}/html"
+    DESTINATION "${CMAKE_INSTALL_DOCDIR}")

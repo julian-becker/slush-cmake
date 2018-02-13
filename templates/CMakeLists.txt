@@ -7,14 +7,15 @@ include(AddModule)
 include(AddExternalModule)
 include(SetupGoogleTest)
 
-add_module(NAME <%= libraryName1 %>)
-add_module(NAME <%= libraryName2 %>)
-add_module(NAME <%= appName %>)
-add_subdirectory(doc)
-
 setup_googletest()
 enable_testing()
 
+add_module(NAME <%= libraryName1 %>)
 add_module(NAME <%= libraryName1 %>_test)
+
+add_module(NAME <%= libraryName2 %>)
 add_module(NAME <%= libraryName2 %>_test)
 
+add_module(NAME <%= appName %>)
+
+add_subdirectory(doc)
