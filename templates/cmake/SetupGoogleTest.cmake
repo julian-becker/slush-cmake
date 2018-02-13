@@ -1,9 +1,18 @@
 include(AddModule)
 include(AddExternalModule)
 
+set(ENABLE_INSTALL ON)
+
+macro(install)
+	if(${ENABLE_INSTALL})
+		_install(${ARGV})
+	endif()
+endmacro(install)
+
 macro(setup_googletest)
 	set(CMAKE_MACOSX_RPATH 1)
 	set(gtest_force_shared_crt ON CACHE INTERNAL "")
+	set(ENABLE_INSTALL OFF)
 	add_external_module(
 	  NAME         GTest
 	  TARGETS      gtest_main gtest
@@ -27,4 +36,5 @@ macro(setup_googletest)
 	target_compile_definitions(gtest_main PUBLIC _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
 	target_compile_definitions(gmock      PUBLIC _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
 	target_compile_definitions(gmock_main PUBLIC _SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING)
+	set(ENABLE_INSTALL ON)
 endmacro(setup_googletest)
