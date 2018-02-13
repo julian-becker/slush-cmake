@@ -9,9 +9,9 @@ target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_14)
 
 target_include_directories(${PROJECT_NAME}
   PUBLIC
-    include
-    ${CMAKE_BINARY_DIR}/include
-)
+    $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
+    $<INSTALL_INTERFACE:include>)
 
 target_link_libraries(${PROJECT_NAME}
   PRIVATE
@@ -36,4 +36,4 @@ install(
 
 install(DIRECTORY include/${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(DIRECTORY ${CMAKE_BINARY_DIR}/include/${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-install(EXPORT <%= libraryName2 %>Config DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake)
+install(EXPORT ${PROJECT_NAME}Config DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake)

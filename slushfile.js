@@ -81,6 +81,12 @@ gulp.task('default', function (done) {
         message: 'What is the author email?',
         default: defaults.authorEmail
     }, {
+        type: 'list',
+        name: 'license',
+        message: 'Choose your license type',
+        choices: ['MIT', 'BSD', 'Unlicense'],
+        default: 'Unlicense'
+    }, {
         type: 'confirm',
         name: 'moveon',
         message: 'Continue?'
@@ -92,10 +98,27 @@ gulp.task('default', function (done) {
             if (!answers.moveon) {
                 return done();
             }
+
+            var d = new Date();
+            answers.year = d.getFullYear();
+            answers.date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
             answers.LIBRARYNAME1 = answers.libraryName1.toUpperCase();
             answers.LIBRARYNAME2 = answers.libraryName2.toUpperCase();
             answers.appNameSlug = _.slugify(answers.appName);
-            gulp.src(__dirname + '/templates/**')
+
+            var files = [__dirname + '/templates/**'];
+            if (answers.license === 'MIT') {
+                files.push('!' + __dirname + '/templates/LICENSE_BSD');
+                files.push('!' + __dirname + '/templates/LICENSE_UNLICENSE');
+            } else if (answers.license === 'BSD') {
+                files.push('!' + __dirname + '/templates/LICENSE_MIT');
+                files.push('!' + __dirname + '/templates/LICENSE_UNLICENSE');
+            } else {
+                files.push('!' + __dirname + '/templates/LICENSE_MIT');
+                files.push('!' + __dirname + '/templates/LICENSE_BSD');
+            }
+
+            gulp.src(files)
                 .pipe(replace('${','_UGLY_OPENBRACE_'))
                 .pipe(replace('}','_UGLY_CLOSINGBRACE_'))
                 .pipe(template(answers))
@@ -113,6 +136,14 @@ gulp.task('default', function (done) {
                       .replace(/==(\s*appName\s*)==/g, answers.appName)
                       .replace(/==(\s*libraryName1\s*)==/g, answers.libraryName1)
                       .replace(/==(\s*libraryName2\s*)==/g, answers.libraryName2);
+
+                      if (answers.license === 'MIT') {
+                          path.basename = path.basename.replace('LICENSE_MIT', 'LICENSE');
+                      } else if (answers.license === 'BSD') {
+                          path.basename = path.basename.replace('LICENSE_BSD', 'LICENSE');
+                      } else {
+                          path.basename = path.basename.replace('LICENSE_UNLICENSE', 'LICENSE');
+                      }
                 }))
                 .pipe(conflict('./'))
                 .pipe(gulp.dest('./'))
