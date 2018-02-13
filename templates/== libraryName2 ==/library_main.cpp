@@ -2,7 +2,7 @@
 #include <<%= libraryName1 %>/<%= libraryName1 %>.h>
 #include <iostream>
 
-<%= libraryName2 %>_API int <%= libraryName2 %>_api()
+<%= LIBRARYNAME2 %>_API int <%= libraryName2 %>_api()
 {
     std::cout << "hello from <%= libraryName2 %>" << std::endl;
     std::cout << "calling <%= libraryName1 %>" << std::endl;

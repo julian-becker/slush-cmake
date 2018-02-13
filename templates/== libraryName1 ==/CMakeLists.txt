@@ -14,7 +14,7 @@ target_include_directories(${PROJECT_NAME}
 include(GenerateExportHeader)
 generate_export_header(${PROJECT_NAME}
   EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/${PROJECT_NAME}/export.h
-  EXPORT_MACRO_NAME <%= libraryName1 %>_API
+  EXPORT_MACRO_NAME <%= LIBRARYNAME1 %>_API
 )
 
 include(GNUInstallDirs)

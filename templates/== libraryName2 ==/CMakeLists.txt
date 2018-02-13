@@ -21,7 +21,7 @@ target_link_libraries(${PROJECT_NAME}
 include(GenerateExportHeader)
 generate_export_header(${PROJECT_NAME}
   EXPORT_FILE_NAME ${CMAKE_BINARY_DIR}/include/${PROJECT_NAME}/export.h
-  EXPORT_MACRO_NAME <%= libraryName2 %>_API
+  EXPORT_MACRO_NAME <%= LIBRARYNAME2 %>_API
 )
 
 
@@ -36,4 +36,4 @@ install(
 
 install(DIRECTORY include/${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(DIRECTORY ${CMAKE_BINARY_DIR}/include/${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-install(EXPORT <%= libraryName1 %>Config DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake)
+install(EXPORT <%= libraryName2 %>Config DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake)

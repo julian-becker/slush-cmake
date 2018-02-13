@@ -92,6 +92,8 @@ gulp.task('default', function (done) {
             if (!answers.moveon) {
                 return done();
             }
+            answers.LIBRARYNAME1 = answers.libraryName1.toUpperCase();
+            answers.LIBRARYNAME2 = answers.libraryName2.toUpperCase();
             answers.appNameSlug = _.slugify(answers.appName);
             gulp.src(__dirname + '/templates/**')
                 .pipe(replace('${','_UGLY_OPENBRACE_'))
