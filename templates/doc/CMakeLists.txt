@@ -1,4 +1,5 @@
 find_package(Sphinx REQUIRED)
+project(<%= appName %> LANGUAGES NONE)
 
 if(NOT DEFINED SPHINX_THEME)
     set(SPHINX_THEME alabaster)
@@ -34,5 +35,5 @@ add_custom_target(docs ALL
 include(GNUInstallDirs)
 
 install(
-    DIRECTORY   "${CMAKE_CURRENT_BINARY_DIR}/html"
+    DIRECTORY   "${CMAKE_CURRENT_BINARY_DIR}/html/"
     DESTINATION "${CMAKE_INSTALL_DOCDIR}")
