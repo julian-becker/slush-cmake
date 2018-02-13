@@ -5,9 +5,8 @@ list(INSERT CMAKE_PREFIX_PATH 0 ${CMAKE_CURRENT_LIST_DIR}/cmake)
 
 include(AddModule)
 include(AddExternalModule)
-include(SetupGoogleTest)
+include(Setup<%= testingFramework %>)
 
-setup_googletest()
 enable_testing()
 
 add_module(NAME <%= libraryName1 %>)

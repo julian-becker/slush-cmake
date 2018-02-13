@@ -84,8 +84,14 @@ gulp.task('default', function (done) {
         type: 'list',
         name: 'license',
         message: 'Choose your license type',
-        choices: ['MIT', 'BSD', 'Unlicense'],
-        default: 'Unlicense'
+        choices: ['MIT', 'BSD', 'UNLICENSE'],
+        default: 'UNLICENSE'
+    }, {
+        type: 'list',
+        name: 'testingFramework',
+        message: 'Choose your testing framework',
+        choices: ['GoogleTest', 'Catch2'],
+        default: 'Catch2'
     }, {
         type: 'confirm',
         name: 'moveon',
@@ -106,17 +112,10 @@ gulp.task('default', function (done) {
             answers.LIBRARYNAME2 = answers.libraryName2.toUpperCase();
             answers.appNameSlug = _.slugify(answers.appName);
 
-            var files = [__dirname + '/templates/**'];
-            if (answers.license === 'MIT') {
-                files.push('!' + __dirname + '/templates/LICENSE_BSD');
-                files.push('!' + __dirname + '/templates/LICENSE_UNLICENSE');
-            } else if (answers.license === 'BSD') {
-                files.push('!' + __dirname + '/templates/LICENSE_MIT');
-                files.push('!' + __dirname + '/templates/LICENSE_UNLICENSE');
-            } else {
-                files.push('!' + __dirname + '/templates/LICENSE_MIT');
-                files.push('!' + __dirname + '/templates/LICENSE_BSD');
-            }
+            var files = [
+                __dirname + '/templates/**',
+                __dirname + '/templates_' + answers.testingFramework + '/**'
+            ];
 
             gulp.src(files)
                 .pipe(replace('${','_UGLY_OPENBRACE_'))
@@ -136,14 +135,19 @@ gulp.task('default', function (done) {
                       .replace(/==(\s*appName\s*)==/g, answers.appName)
                       .replace(/==(\s*libraryName1\s*)==/g, answers.libraryName1)
                       .replace(/==(\s*libraryName2\s*)==/g, answers.libraryName2);
+                }))
+                .pipe(conflict('./'))
+                .pipe(gulp.dest('./'))
+                .pipe(install())
+                .on('end', function () {
+                    done();
+                });
 
-                      if (answers.license === 'MIT') {
-                          path.basename = path.basename.replace('LICENSE_MIT', 'LICENSE');
-                      } else if (answers.license === 'BSD') {
-                          path.basename = path.basename.replace('LICENSE_BSD', 'LICENSE');
-                      } else {
-                          path.basename = path.basename.replace('LICENSE_UNLICENSE', 'LICENSE');
-                      }
+            gulp.src(__dirname + '/license_templates/LICENSE_'+answers.license)
+                .pipe(template(answers))
+                .pipe(rename(function (path) {
+                    console.log('basename='+path.basename);
+                    path.basename = 'LICENSE';
                 }))
                 .pipe(conflict('./'))
                 .pipe(gulp.dest('./'))
