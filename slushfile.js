@@ -54,20 +54,20 @@ var defaults = (function () {
 
 gulp.task('default', function (done) {
     var prompts = [{
-        name: 'libraryName1',
-        message: 'Name of dummy library 1',
-        default: defaults.libraryName1
-    }, {
-        name: 'libraryName2',
-        message: 'Name of dummy library 2',
-        default: defaults.libraryName2
-    }, {
         name: 'appName',
-        message: 'Name for a hello-world application using ?',
+        message: 'Name for the main application?',
         default: defaults.appName
     }, {
         name: 'appDescription',
-        message: 'What is the description?'
+        message: 'What is the description for this application?'
+    }, {
+        name: 'libraryName1',
+        message: 'Name of dummy component library 1?',
+        default: defaults.libraryName1
+    }, {
+        name: 'libraryName2',
+        message: 'Name of dummy component library 2?',
+        default: defaults.libraryName2
     }, {
         name: 'appVersion',
         message: 'What is the version of your project?',
